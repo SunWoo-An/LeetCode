@@ -4,15 +4,14 @@
 #         self.val = val
 #         self.next = next
 class Solution:
-    def isPalindrome(self, head: Optional[ListNode]) -> bool:
-        str = list()
-        curr = head
-        while True:
-            if curr == None:
-                break
-            str.append(curr.val)
-            curr = curr.next
-        if str[::-1] == str:
-            return True
-        else:
-            return False
+    def isPalindrome(self, head: Optional[ListNode]) -> bool: # runner method
+        rev = None
+        slow = fast = head
+        while fast and fast.next:
+            fast = fast.next.next
+            rev, rev.next, slow = slow, rev, slow.next
+        if fast:
+            slow = slow.next
+        while rev and rev.val == slow.val:
+            slow, rev = slow.next, rev.next
+        return not rev
